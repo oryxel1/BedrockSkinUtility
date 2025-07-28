@@ -113,6 +113,8 @@ public class GeometryUtil {
             case "rightarm" -> "right_arm";
             case "leftleg" -> "left_leg";
             case "rightleg" -> "right_leg";
+            case "leftpants" -> "left_pants";
+            case "rightpants" -> "right_pants";
             default -> name.toLowerCase(Locale.ROOT);
         };
     }

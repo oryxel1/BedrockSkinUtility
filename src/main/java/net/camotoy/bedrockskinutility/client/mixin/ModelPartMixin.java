@@ -35,28 +35,17 @@ public class ModelPartMixin implements BedrockModelPart {
     private Vector3f pivot = new Vector3f();
 
     @Unique
-    private Vector3f offset = new Vector3f();
-
-    @Unique
     private Vector3f rotation = new Vector3f();
 
     @Inject(method = "translateAndRotate", at = @At("HEAD"))
     public void rotateHead(PoseStack poseStack, CallbackInfo ci) {
-        // Offset is needed for rotating too!
-        poseStack.translate(this.offset.x / 16.0F, this.offset.y / 16.0F, this.offset.z / 16.0F);
-
         poseStack.translate(this.pivot.x / 16.0F, this.pivot.y / 16.0F, this.pivot.z / 16.0F);
         poseStack.mulPose((new Quaternionf()).rotationXYZ(this.rotation.x * DEGREES_TO_RADIANS, this.rotation.y * DEGREES_TO_RADIANS, this.rotation.z * DEGREES_TO_RADIANS));
         poseStack.translate(-this.pivot.x / 16.0F, -this.pivot.y / 16.0F, -this.pivot.z / 16.0F);
-
-        poseStack.translate(-this.offset.x / 16.0F, -this.offset.y / 16.0F, -this.offset.z / 16.0F);
     }
 
     @Inject(method = "translateAndRotate", at = @At("TAIL"))
     public void rotateTail(PoseStack poseStack, CallbackInfo ci) {
-        // Do this after scale since this shouldn't be affected by scaling.
-        poseStack.translate(this.offset.x / 16.0F, this.offset.y / 16.0F, this.offset.z / 16.0F);
-
         if (!this.isBedrockModel || !this.neededOffset) {
             return;
         }
@@ -78,11 +67,6 @@ public class ModelPartMixin implements BedrockModelPart {
     }
 
     @Override
-    public boolean bedrockskinutility$isBedrockModel() {
-        return this.isBedrockModel;
-    }
-
-    @Override
     public void bedrockskinutility$setBedrockModel() {
         this.isBedrockModel = true;
     }
@@ -90,11 +74,6 @@ public class ModelPartMixin implements BedrockModelPart {
     @Override
     public void bedrockskinutility$setPivot(Vector3f vec3) {
         this.pivot = vec3;
-    }
-
-    @Override
-    public void bedrockskinutility$setOffset(Vector3f vec3) {
-        this.offset = new Vector3f(vec3.x, -vec3.y, vec3.z);
     }
 
     @Override

@@ -15,7 +15,7 @@ import org.joml.Vector3f;
 import java.util.*;
 
 public class GeometryUtil {
-    private static final List<String> LEG_RELATED = List.of("leftleg", "rightleg", "rightpants", "leftpants");
+    private static final List<String> LEG_RELATED = List.of("leftleg", "rightleg");
 
     public static BedrockPlayerEntityModel<AbstractClientPlayer> bedrockGeoToJava(BedrockGeometryModel geometry) {
         // There are some times when the skin image file is larger than the geometry UV points.
